@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUMOEL | Productos de Calidad</title>
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* -----------------------------------------
+       VARIABLES Y ESTILOS BASE
+    ----------------------------------------- */
+    :root {
+      --principal: #E67E22;
+      --secundario: #D35400;
+      --apoyo: #FDF2E9;
+      --fondo: #FFFFFF;
+      --texto: #2C3E50;
+      --whatsapp: #25D366;
+      --gris-suave: #F4F7F6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--fondo);
+      color: var(--texto);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    section {
+      padding: 80px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--texto);
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: var(--principal);
+      margin: 10px auto 0 auto;
+      border-radius: 2px;
+    }
+
+    /* -----------------------------------------
+       HEADER & NAVEGACIÓN
+    ----------------------------------------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--fondo);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--principal);
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--texto);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover {
+      color: var(--principal);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary { background: var(--principal); color: #fff; }
+    .btn-primary:hover { background: var(--secundario); }
+    .btn-whatsapp { background: var(--whatsapp); color: #fff; }
+    .btn-whatsapp:hover { opacity: 0.9; }
+
+    /* Menú Hamburguesa */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--texto);
+    }
+
+    /* -----------------------------------------
+       HERO SECTION
+    ----------------------------------------- */
+    #inicio {
+      height: 100vh;
+      background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding-top: 80px;
+    }
+
+    .hero-content h2 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    /* -----------------------------------------
+       SOBRE NOSOTROS
+    ----------------------------------------- */
+    #nosotros .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-img img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .about-text h3 {
+      font-size: 1.5rem;
+      color: var(--secundario);
+      margin-bottom: 15px;
+    }
+
+    .about-text p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    /* -----------------------------------------
+       NUESTROS PRODUCTOS (MODO CARRUSEL)
+    ----------------------------------------- */
+    #productos {
+      background-color: var(--apoyo);
+      position: relative;
+    }
+
+    .productos-slider-container {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .productos-track {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 15px 5px;
+      width: 100%;
+    }
+
+    /* Ocultar barra de scroll visual en navegadores */
+    .productos-track::-webkit-scrollbar {
+      display: none;
+    }
+    .productos-track {
+      -ms-overflow-style: none;  
+      scrollbar-width: none;  
+    }
+
+    .producto-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+      flex: 0 0 calc(33.333% - 14px); /* 3 columnas en escritorio */
+    }
+
+    .producto-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .producto-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .producto-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .producto-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .producto-info p {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* Flechas del Carrusel */
+    .slider-btn {
+      background: var(--principal);
+      color: white;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      position: absolute;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+    .slider-btn:hover { background: var(--secundario); }
+    .slider-btn.prev { left: -25px; }
+    .slider-btn.next { right: -25px; }
+
+    /* -----------------------------------------
+       FUNDADOR
+    ----------------------------------------- */
+    #fundador .founder-block {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      background: var(--gris-suave);
+      padding: 40px;
+      border-radius: 12px;
+    }
+
+    .founder-img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .founder-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .founder-info .role {
+      color: var(--principal);
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    /* -----------------------------------------
+       POR QUÉ ELEGIRNOS
+    ----------------------------------------- */
+    #ventajas {
+      background: var(--fondo);
+    }
+
+    .ventajas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 25px;
+    }
+
+    .ventaja-card {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--gris-suave);
+      border-radius: 12px;
+      border-bottom: 4px solid var(--principal);
+    }
+
+    .ventaja-card i {
+      font-size: 2.5rem;
+      color: var(--secundario);
+      margin-bottom: 15px;
+    }
+
+    .ventaja-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    /* -----------------------------------------
+       CONTACTO + MAPA DE UBICACIÓN
+    ----------------------------------------- */
+    #contacto {
+      background-color: var(--apoyo);
+    }
+
+    .contacto-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .contacto-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .info-box i {
+      color: var(--principal);
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+
+    .info-box a {
+      color: var(--texto);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .info-box a:hover {
+      color: var(--secundario);
+    }
+
+    /* Contenedor del Mapa */
+    .mapa-container {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .mapa-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* -----------------------------------------
+       FOOTER
+    ----------------------------------------- */
+    footer {
+      background: var(--texto);
+      color: #fff;
+      padding: 40px 20px;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto 30px auto;
+    }
+
+    .footer-box h3, .footer-box h4 {
+      margin-bottom: 15px;
+      color: var(--principal);
+    }
+
+    .footer-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-box ul a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-box ul a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #444;
+      padding-top: 20px;
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+
+    /* -----------------------------------------
+       WIDGET FLOTANTE WHATSAPP
+    ----------------------------------------- */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: var(--whatsapp);
+      color: #fff;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+      text-decoration: none;
+      transition: transform 0.3s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+
+    /* -----------------------------------------
+       RESPONSIVE DESIGN (MEDIA QUERIES)
+    ----------------------------------------- */
+    @media (max-width: 992px) {
+      .hero-content h2 { font-size: 2.8rem; }
+      #nosotros .two-columns { grid-template-columns: 1fr; }
+      .producto-card { flex: 0 0 calc(50% - 10px); } /* 2 columnas en tablets */
+      .slider-btn { display: none; }
+      #fundador .founder-block { flex-direction: column; text-align: center; }
+      .contacto-wrapper { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--fondo);
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        gap: 15px;
+      }
+      .nav-menu.active { display: flex; }
+      .nav-buttons { display: none; }
+      .contacto-info { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 576px) {
+      .producto-card { flex: 0 0 100%; } /* 1 columna en celulares */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/51999999999?text=Hola,%20quiero%20más%20información." class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <a href="#inicio" class="logo">SUMOEL</a>
+      <div class="menu-toggle" id="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#fundador">Fundador</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="nav-buttons">
+        <a href="https://wa.me/51999999999" class="btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="#contacto" class="btn btn-primary">Cotizar</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="inicio">
+    <div class="hero-content">
+      <h2>Bienvenidos a SUMOEL</h2>
+      <p>Productos de calidad para satisfacer las necesidades de nuestros clientes.</p>
+      <div class="hero-buttons">
+        <a href="#productos" class="btn btn-primary">Ver Productos</a>
+        <a href="https://wa.me/51999999999?text=Hola,%20quiero%20más%20información." class="btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Contactar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section id="nosotros" class="container">
+    <h2 class="section-title">Sobre Nosotros</h2>
+    <div class="two-columns">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600" alt="Equipo de Trabajo">
+      </div>
+      <div class="about-text">
+        <h3>Compromiso con la excelencia</h3>
+        <p>Somos una empresa comprometida con la calidad, la innovación y la satisfacción de nuestros clientes.</p>
+        <p><strong>Misión:</strong> Brindar soluciones eficientes a través de un catálogo de productos de primer nivel.</p>
+        <p><strong>Visión:</strong> Ser líderes reconocidos por la confianza y atención personalizada en nuestro sector para el año 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PRODUCTOS CON CARRUSEL (DINÁMICA) -->
+  <section id="productos">
+    <div class="container">
+      <h2 class="section-title">Nuestros Productos</h2>
+      
+      <div class="productos-slider-container">
+        <button class="slider-btn prev" onclick="slideProducts(-1)"><i class="fas fa-chevron-left"></i></button>
+        
+        <!-- Aquí se inyectarán dinámicamente las tarjetas mediante JavaScript -->
+        <div class="productos-track" id="productos-track">
+          <p style="padding: 20px; color: #7f8c8d; text-align: center; width: 100%;">Cargando catálogo...</p>
+        </div>
+        
+        <button class="slider-btn next" onclick="slideProducts(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDADOR -->
+  <section id="fundador" class="container">
+    <h2 class="section-title">Fundador</h2>
+    <div class="founder-block">
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300" alt="Juan Pérez" class="founder-img">
+      <div class="founder-info">
+        <h3>Juan Pérez</h3>
+        <p class="role">Fundador y Director General</p>
+        <p>Más de 15 años de experiencia brindando soluciones a nuestros clientes con un enfoque firme en la honestidad, el servicio directo y el desarrollo comercial sostenible.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿POR QUÉ ELEGIRNOS? -->
+  <section id="ventajas" class="container">
+    <h2 class="section-title">¿Por qué elegirnos?</h2>
+    <div class="ventajas-grid">
+      <div class="ventaja-card">
+        <i class="fas fa-award"></i>
+        <h3>Calidad</h3>
+        <p>Productos seleccionados cuidadosamente.</p>
+      </div>
+      <div class="ventaja-card">
+        <i class="fas fa-user-shield"></i>
+        <h3>Atención personalizada</h3>
+        <p>Respuesta rápida adaptada a ti.</p>
+      </div>
+      <div class="ventaja-card">
+        <i class="fas fa-handshake"></i>
+        <h3>Confianza</h3>
+        <p>Experiencia totalmente comprobada.</p>
+      </div>
+      <div class="ventaja-card">
+        <i class="fas fa-star"></i>
+        <h3>Compromiso</h3>
+        <p>Máxima orientación al cliente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE CONTACTO + MAPA DE UBICACIÓN -->
+  <section id="contacto">
+    <div class="container">
+      <h2 class="section-title">Contacto y Ubicación</h2>
+      <div class="contacto-wrapper">
+        
+        <!-- Info de contacto directa -->
+        <div class="contacto-info">
+          <div class="info-box">
+            <i class="fas fa-phone-alt"></i>
+            <h4>Teléfono</h4>
+            <a href="tel:+51999999999">+51 999 999 999</a>
+          </div>
+          <div class="info-box">
+            <i class="fab fa-whatsapp"></i>
+            <h4>WhatsApp</h4>
+            <a href="https://wa.me/51999999999" target="_blank">+51 999 999 999</a>
+          </div>
+          <div class="info-box">
+            <i class="fas fa-envelope"></i>
+            <h4>Correo</h4>
+            <a href="mailto:contacto@sumoel.com">contacto@sumoel.com</a>
+          </div>
+          <div class="info-box">
+            <i class="fas fa-map-marker-alt"></i>
+            <h4>Dirección</h4>
+            <p>Lima, Perú</p>
+          </div>
+        </div>
+
+        <!-- Columna del mapa interactivo -->
+        <div class="mapa-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1747.9001003018132!2d-76.8984907362213!3d-12.082972197340945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c16c204d4271%3A0x84399b0340155703!2sPlayPet%20Store!5e0!3m2!1ses!2spe!4v1782239498975!5m2!1ses!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-box">
+        <h3>SUMOEL</h3>
+        <p>Soluciones integrales con la calidez y el profesionalismo que nos caracteriza.</p>
+      </div>
+      <div class="footer-box">
+        <h4>Enlaces rápidos</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-box">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/51999999999"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="tel:+51999999999"><i class="fas fa-phone-alt"></i> Teléfono</a></li>
+          <li><a href="mailto:contacto@sumoel.com"><i class="fas fa-envelope"></i> Correo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 SUMOEL. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <!-- INTERACTIVIDAD Y CONEXIÓN JAVASCRIPT -->
+  <script>
+    // Menú móvil (Hamburguesa)
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenu.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+
+    // Función para deslizar los productos en el carrusel
+    function slideProducts(direction) {
+      const track = document.getElementById('productos-track');
+      const firstCard = document.querySelector('.producto-card');
+      if (firstCard) {
+        const cardWidth = firstCard.offsetWidth + 20; 
+        track.scrollLeft += direction * cardWidth;
+      }
+    }
+
+    // ========================================================
+    // CONEXIÓN DINÁMICA CON NETLIFY / GITHUB API
+    // ========================================================
+    
+    // TODO: REEMPLAZA ESTOS DOS VALORES CON TUS DATOS REALES DE GITHUB
+    const GITHUB_USER = "AbelGM24";
+    const GITHUB_REPO = "PortalWeb-web";
+    
+    // Esta es la ruta exacta de la carpeta donde Decap CMS guarda los archivos JSON de tus productos
+    const CARPETA_PRODUCTOS = "contenido/productos"; 
+
+    async function cargarProductosNetlify() {
+      const track = document.getElementById('productos-track');
+      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${CARPETA_PRODUCTOS}`;
+
+      try {
+        const respuesta = await fetch(url);
+        if (!respuesta.ok) throw new Error("No se pudo acceder a la carpeta de productos.");
+        const archivos = await respuesta.json();
+
+        // Limpiamos el texto de "Cargando..." antes de pintar los datos reales
+        track.innerHTML = "";
+
+        let contadorProductos = 0;
+
+        for (const archivo of archivos) {
+          // Validamos que sea un archivo JSON o Markdown generado por el CMS
+          if (archivo.name.endsWith('.json') || archivo.name.endsWith('.md')) {
+            const resContenido = await fetch(archivo.download_url);
+            const data = await resContenido.json();
+
+            contadorProductos++;
+
+            // Mapeamos las propiedades exactas que configuraste en tu config.yml del CMS (ejemplo: title, image, description)
+            const tarjetaHtml = `
+              <div class="producto-card">
+                <img src="${data.image || 'https://via.placeholder.com/400'}" alt="${data.title || 'Producto'}">
+                <div class="producto-info">
+                  <h3>${data.title || 'Producto sin título'}</h3>
+                  <p>${data.description || 'Sin descripción disponible.'}</p>
+                  <a href="https://wa.me/51999999999?text=Hola,%20estoy%20interesado%20en%20el%20producto%20${encodeURIComponent(data.title || '')}." class="btn btn-primary" target="_blank">Consultar</a>
+                </div>
+              </div>
+            `;
+            track.insertAdjacentHTML('beforeend', tarjetaHtml);
+          }
+        }
+
+        // Si la carpeta existe pero no tiene archivos válidos dentro
+        if (contadorProductos === 0) {
+          track.innerHTML = '<p style="padding:20px; color:#7f8c8d; text-align:center; width:100%;">No hay productos disponibles por el momento.</p>';
+        }
+
+      } catch (error) {
+        console.error("Error al cargar los productos de Netlify:", error);
+        track.innerHTML = '<p style="padding:20px; color:#7f8c8d; text-align:center; width:100%;">Sube tu primer producto desde el panel /admin para visualizarlo aquí.</p>';
+      }
+    }
+
+    // Inicializar la carga cuando el documento esté completamente listo
+    document.addEventListener('DOMContentLoaded', cargarProductosNetlify);
+  </script>
+</body>
+</html>

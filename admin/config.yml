@@ -1,0 +1,21 @@
+# Configuración de la estructura del CMS
+backend:
+  name: git-gateway
+  branch: main # Asegúrate de que coincida con el nombre de tu rama principal en GitHub (usualmente 'main' o 'master')
+
+# Carpeta donde se guardarán las imágenes que suba el administrador
+media_folder: "imagenes/productos"
+public_folder: "/imagenes/productos"
+
+# Definición del panel para el administrador
+collections:
+  - name: "productos"
+    label: "Productos"
+    folder: "contenido/productos" # Aquí se guardarán los datos de cada producto en archivos individuales
+    create: true # Permite al administrador crear nuevos productos
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nombre del Producto", name: "title", widget: "string" }
+      - { label: "Precio", name: "precio", widget: "number", value_type: "float" }
+      - { label: "Descripción", name: "description", widget: "text" }
+      - { label: "Imagen del Producto", name: "image", widget: "image" }
