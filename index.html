@@ -722,7 +722,26 @@
     </div>
   </footer>
 
-  <!-- INTERACTIVIDAD Y CONEXIÓN JAVASCRIPT -->
+  <!-- --------------------------------------------------------
+     NUEVOS SCRIPTS OBLIGATORIOS PARA EL INICIO DE SESIÓN CMS
+  -------------------------------------------------------- -->
+  <!-- Script de Netlify Identity (Inyecta la ventana flotante) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <script>
+    // Control de redirección al panel tras iniciar sesión correctamente
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+
+  <!-- INTERACTIVIDAD Y CONEXIÓN JAVASCRIPT EXISTENTE -->
   <script>
     // Menú móvil (Hamburguesa)
     const mobileMenu = document.getElementById('mobile-menu');
@@ -751,12 +770,8 @@
     // ========================================================
     // CONEXIÓN DINÁMICA CON NETLIFY / GITHUB API
     // ========================================================
-    
-    // TODO: REEMPLAZA ESTOS DOS VALORES CON TUS DATOS REALES DE GITHUB
     const GITHUB_USER = "AbelGM24";
-    const GITHUB_REPO = "PortalWeb-web";
-    
-    // Esta es la ruta exacta de la carpeta donde Decap CMS guarda los archivos JSON de tus productos
+    const GITHUB_REPO = "PlataformaWeb";
     const CARPETA_PRODUCTOS = "contenido/productos"; 
 
     async function cargarProductosNetlify() {
@@ -768,20 +783,16 @@
         if (!respuesta.ok) throw new Error("No se pudo acceder a la carpeta de productos.");
         const archivos = await respuesta.json();
 
-        // Limpiamos el texto de "Cargando..." antes de pintar los datos reales
         track.innerHTML = "";
-
         let contadorProductos = 0;
 
         for (const archivo of archivos) {
-          // Validamos que sea un archivo JSON o Markdown generado por el CMS
           if (archivo.name.endsWith('.json') || archivo.name.endsWith('.md')) {
             const resContenido = await fetch(archivo.download_url);
             const data = await resContenido.json();
 
             contadorProductos++;
 
-            // Mapeamos las propiedades exactas que configuraste en tu config.yml del CMS (ejemplo: title, image, description)
             const tarjetaHtml = `
               <div class="producto-card">
                 <img src="${data.image || 'https://via.placeholder.com/400'}" alt="${data.title || 'Producto'}">
@@ -796,7 +807,6 @@
           }
         }
 
-        // Si la carpeta existe pero no tiene archivos válidos dentro
         if (contadorProductos === 0) {
           track.innerHTML = '<p style="padding:20px; color:#7f8c8d; text-align:center; width:100%;">No hay productos disponibles por el momento.</p>';
         }
@@ -807,7 +817,6 @@
       }
     }
 
-    // Inicializar la carga cuando el documento esté completamente listo
     document.addEventListener('DOMContentLoaded', cargarProductosNetlify);
   </script>
 </body>
