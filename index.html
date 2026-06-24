@@ -11,7 +11,7 @@
   
   <style>
     /* -----------------------------------------
-       VARIABLES Y ESTILOS BASE
+        VARIABLES Y ESTILOS BASE
     ----------------------------------------- */
     :root {
       --principal: #E67E22;
@@ -69,7 +69,7 @@
     }
 
     /* -----------------------------------------
-       HEADER & NAVEGACIÓN
+        HEADER & NAVEGACIÓN
     ----------------------------------------- */
     header {
       position: fixed;
@@ -149,7 +149,7 @@
     }
 
     /* -----------------------------------------
-       HERO SECTION
+        HERO SECTION
     ----------------------------------------- */
     #inicio {
       height: 100vh;
@@ -184,7 +184,7 @@
     }
 
     /* -----------------------------------------
-       SOBRE NOSOTROS
+        SOBRE NOSOTROS
     ----------------------------------------- */
     #nosotros .two-columns {
       display: grid;
@@ -211,7 +211,7 @@
     }
 
     /* -----------------------------------------
-       NUESTROS PRODUCTOS (MODO CARRUSEL)
+        NUESTROS PRODUCTOS (MODO CARRUSEL)
     ----------------------------------------- */
     #productos {
       background-color: var(--apoyo);
@@ -307,7 +307,7 @@
     .slider-btn.next { right: -25px; }
 
     /* -----------------------------------------
-       FUNDADOR
+        FUNDADOR
     ----------------------------------------- */
     #fundador .founder-block {
       display: flex;
@@ -338,7 +338,7 @@
     }
 
     /* -----------------------------------------
-       POR QUÉ ELEGIRNOS
+        POR QUÉ ELEGIRNOS
     ----------------------------------------- */
     #ventajas {
       background: var(--fondo);
@@ -370,7 +370,7 @@
     }
 
     /* -----------------------------------------
-       CONTACTO + MAPA DE UBICACIÓN
+        CONTACTO + MAPA DE UBICACIÓN
     ----------------------------------------- */
     #contacto {
       background-color: var(--apoyo);
@@ -431,7 +431,7 @@
     }
 
     /* -----------------------------------------
-       FOOTER
+        FOOTER
     ----------------------------------------- */
     footer {
       background: var(--texto);
@@ -478,7 +478,7 @@
     }
 
     /* -----------------------------------------
-       WIDGET FLOTANTE WHATSAPP
+        WIDGET FLOTANTE WHATSAPP
     ----------------------------------------- */
     .whatsapp-float {
       position: fixed;
@@ -504,7 +504,7 @@
     }
 
     /* -----------------------------------------
-       RESPONSIVE DESIGN (MEDIA QUERIES)
+        RESPONSIVE DESIGN (MEDIA QUERIES)
     ----------------------------------------- */
     @media (max-width: 992px) {
       .hero-content h2 { font-size: 2.8rem; }
@@ -603,7 +603,7 @@
       <div class="productos-slider-container">
         <button class="slider-btn prev" onclick="slideProducts(-1)"><i class="fas fa-chevron-left"></i></button>
         
-        <!-- Aquí se inyectarán dinámicamente las tarjetas mediante JavaScript -->
+        <!-- Contenedor dinámico -->
         <div class="productos-track" id="productos-track">
           <p style="padding: 20px; color: #7f8c8d; text-align: center; width: 100%;">Cargando catálogo...</p>
         </div>
@@ -722,14 +722,10 @@
     </div>
   </footer>
 
-  <!-- --------------------------------------------------------
-     NUEVOS SCRIPTS OBLIGATORIOS PARA EL INICIO DE SESIÓN CMS
-  -------------------------------------------------------- -->
-  <!-- Script de Netlify Identity (Inyecta la ventana flotante) -->
+  <!-- SCRIPT NETLIFY IDENTITY (CMS LOGIN) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
   <script>
-    // Control de redirección al panel tras iniciar sesión correctamente
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
@@ -741,7 +737,7 @@
     }
   </script>
 
-  <!-- INTERACTIVIDAD Y CONEXIÓN JAVASCRIPT EXISTENTE -->
+  <!-- INTERACTIVIDAD Y CONEXIÓN JAVASCRIPT CORREGIDA -->
   <script>
     // Menú móvil (Hamburguesa)
     const mobileMenu = document.getElementById('mobile-menu');
@@ -768,7 +764,7 @@
     }
 
     // ========================================================
-    // CONEXIÓN DINÁMICA CON NETLIFY / GITHUB API
+    // CONEXIÓN DINÁMICA CON NETLIFY / GITHUB API (SOPORTE JSON Y MD)
     // ========================================================
     const GITHUB_USER = "AbelGM24";
     const GITHUB_REPO = "PlataformaWeb";
@@ -787,12 +783,31 @@
         let contadorProductos = 0;
 
         for (const archivo of archivos) {
-          if (archivo.name.endsWith('.json') || archivo.name.endsWith('.md')) {
+          let data = {};
+
+          // 1. Procesar archivos estructurados en formato JSON
+          if (archivo.name.endsWith('.json')) {
             const resContenido = await fetch(archivo.download_url);
-            const data = await resContenido.json();
-
+            data = await resContenido.json();
             contadorProductos++;
+          } 
+          // 2. Procesar archivos Markdown (.md) generados por Decap CMS
+          else if (archivo.name.endsWith('.md')) {
+            const resContenido = await fetch(archivo.download_url);
+            const texto = await resContenido.text();
 
+            // Desestructurar y limpiar las líneas del bloque Frontmatter
+            const lineas = texto.split('\n');
+            lineas.forEach(linea => {
+              if (linea.startsWith('title:')) data.title = linea.replace('title:', '').trim().replace(/"/g, '');
+              if (linea.startsWith('image:')) data.image = linea.replace('image:', '').trim().replace(/"/g, '');
+              if (linea.startsWith('description:')) data.description = linea.replace('description:', '').trim().replace(/"/g, '');
+            });
+            contadorProductos++;
+          }
+
+          // Inyectar la tarjeta si corresponde a un archivo compatible
+          if (archivo.name.endsWith('.json') || archivo.name.endsWith('.md')) {
             const tarjetaHtml = `
               <div class="producto-card">
                 <img src="${data.image || 'https://via.placeholder.com/400'}" alt="${data.title || 'Producto'}">
